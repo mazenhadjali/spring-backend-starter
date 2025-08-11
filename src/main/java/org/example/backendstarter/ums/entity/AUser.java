@@ -1,6 +1,7 @@
 package org.example.backendstarter.ums.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,7 +23,7 @@ public class AUser extends Auditable {
     private Long id;
     private String username;
     private String email;
-    private String hashedPassword;
+    private String password;
 
     private String firstName;
     private String lastName;
@@ -31,7 +32,7 @@ public class AUser extends Auditable {
 
     private Date lastLogin;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
 }

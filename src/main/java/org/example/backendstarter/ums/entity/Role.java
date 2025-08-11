@@ -4,10 +4,12 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.Setter;
 import org.example.backendstarter.common.Auditable;
 import org.example.backendstarter.common.Feature;
 
@@ -15,6 +17,7 @@ import java.util.Set;
 
 @Entity(name = "roles")
 @Getter
+@Setter
 public class Role extends Auditable {
 
     @Id
@@ -23,7 +26,7 @@ public class Role extends Auditable {
     private String name;
     private String description;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Feature> features;
 }

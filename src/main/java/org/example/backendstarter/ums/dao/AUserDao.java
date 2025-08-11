@@ -5,35 +5,33 @@ import org.example.backendstarter.ums.entity.AUser;
 import org.example.backendstarter.ums.repository.AUserRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
 public class AUserDao {
 
     private final AUserRepository repository;
 
-    AUser save(AUser user) {
+    public AUser save(AUser user) {
         return repository.save(user);
     }
 
-    AUser findById(Long id) {
+    public AUser findById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    AUser findByUsername(String username) {
+    public AUser findByUsername(String username) {
         return repository.findByUsername(username).orElse(null);
     }
 
-    boolean existsById(Long id) {
+    public boolean existsById(Long id) {
         return repository.existsById(id);
     }
 
-    boolean existsByUsername(String username) {
+    public boolean existsByUsername(String username) {
         return repository.existsByUsername(username);
     }
 
-    boolean deleteById(Long id) {
+    public boolean deleteById(Long id) {
         try {
             repository.deleteById(id);
         } catch (Exception e) {
