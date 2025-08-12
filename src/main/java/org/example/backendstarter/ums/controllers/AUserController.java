@@ -23,17 +23,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AUserController {
 
     private final AUserService userService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('FEAT_LIST_USERS')")
     public ResponseEntity<List<AUserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('FEAT_CREATE_USER')")
     public ResponseEntity<AUserDto> createUser(@RequestBody CreateUserRequest request, UriComponentsBuilder uriBuilder) {
         AUserDto created = userService.createUser(request);
         URI location = uriBuilder
@@ -43,28 +44,33 @@ public class AUserController {
         return ResponseEntity.created(location).body(created);
     }
 
+    @PreAuthorize("hasAuthority('FEAT_ASSIGN_ROLE_TO_USER')")
     @PostMapping("/{userId}/roles/{roleid}")
     public ResponseEntity<String> grantRole(@PathVariable Long userId, @PathVariable Long roleid) {
         userService.grantRole(userId, roleid);
         return ResponseEntity.ok("Role granted");
     }
 
+    @PreAuthorize("hasAuthority('FEAT_REVOKE_ROLE_FROM_USER')")
     @DeleteMapping("/{userId}/roles/{roleid}")
     public ResponseEntity<String> revokeRole(@PathVariable Long userId, @PathVariable Long roleid) {
         userService.revokeRole(userId, roleid);
         return ResponseEntity.ok("Role revoked");
     }
 
+    @PreAuthorize("hasAuthority('FEAT_LIST_USERS')")
     @GetMapping("/{id}")
     public ResponseEntity<AUserDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    @PreAuthorize("hasAuthority('FEAT_UPDATE_USER')")
     @PutMapping("/{id}")
     public ResponseEntity<AUserDto> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
+    @PreAuthorize("hasAuthority('FEAT_DELETE_USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
