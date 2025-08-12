@@ -27,7 +27,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         }
         Set<GrantedAuthority> auths = new HashSet<>();
         u.getRoles().forEach(r -> {
-            auths.add(new SimpleGrantedAuthority("ROLE_" + r.getName().toLowerCase().trim().replace(" ", "_")));
+            auths.add(new SimpleGrantedAuthority("ROLE_" + r.getName().toUpperCase().trim().replace(" ", "_")));
             r.getFeatures().forEach(f ->
                     auths.add(new SimpleGrantedAuthority("FEAT_" + f)));
         });

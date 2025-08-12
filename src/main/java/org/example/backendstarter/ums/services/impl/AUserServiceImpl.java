@@ -2,10 +2,12 @@ package org.example.backendstarter.ums.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.backendstarter.ums.dao.AUserDao;
+import org.example.backendstarter.ums.dao.RoleDao;
 import org.example.backendstarter.ums.dto.AUserDto;
 import org.example.backendstarter.ums.dto.payload.CreateUserRequest;
 import org.example.backendstarter.ums.dto.payload.UpdateUserRequest;
 import org.example.backendstarter.ums.entity.AUser;
+import org.example.backendstarter.ums.entity.Role;
 import org.example.backendstarter.ums.mappers.AuserMapper;
 import org.example.backendstarter.ums.services.AUserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ import java.util.List;
 public class AUserServiceImpl implements AUserService {
 
     private final AUserDao userDao;
+    private final RoleDao roleDao;
     private final AuserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -53,5 +56,33 @@ public class AUserServiceImpl implements AUserService {
             throw new IllegalArgumentException("User not found");
         }
         userDao.deleteById(id);
+    }
+
+    @Override
+    public void grantRole(Long userId, Long roleId) {
+        AUser user = userDao.findById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        Role role = roleDao.findById(roleId);
+        if (role == null) {
+            throw new IllegalArgumentException("Role not found");
+        }
+        user.getRoles().add(role);
+        userDao.save(user);
+    }
+
+    @Override
+    public void revokeRole(Long userId, Long roleId) {
+        AUser user = userDao.findById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        Role role = roleDao.findById(roleId);
+        if (role == null) {
+            throw new IllegalArgumentException("Role not found");
+        }
+        user.getRoles().remove(role);
+        userDao.save(user);
     }
 }

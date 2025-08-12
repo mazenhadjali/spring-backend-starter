@@ -43,6 +43,18 @@ public class AUserController {
         return ResponseEntity.created(location).body(created);
     }
 
+    @PostMapping("/{userId}/roles/{roleid}")
+    public ResponseEntity<String> grantRole(@PathVariable Long userId, @PathVariable Long roleid) {
+        userService.grantRole(userId, roleid);
+        return ResponseEntity.ok("Role granted");
+    }
+
+    @DeleteMapping("/{userId}/roles/{roleid}")
+    public ResponseEntity<String> revokeRole(@PathVariable Long userId, @PathVariable Long roleid) {
+        userService.revokeRole(userId, roleid);
+        return ResponseEntity.ok("Role revoked");
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AUserDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));

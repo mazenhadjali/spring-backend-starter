@@ -46,5 +46,4 @@ public class AuserMapper {
         modelMapper.map(source, destination);
     }
 
-
 }

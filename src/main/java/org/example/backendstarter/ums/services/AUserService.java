@@ -18,4 +18,8 @@ public interface AUserService {
 
     void deleteUser(Long id);
 
+    void grantRole(Long userId, Long roleId);
+
+    void revokeRole(Long userId, Long roleId);
+
 }

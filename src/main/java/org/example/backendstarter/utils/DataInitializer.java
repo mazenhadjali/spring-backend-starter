@@ -34,7 +34,7 @@ public class DataInitializer {
         // Create admin role
         Role adminRole = new Role();
         adminRole.setName("ADMIN");
-        adminRole.setFeatures(Set.of(Feature.CREATE_ROLE, Feature.UPDATE_ROLE, Feature.CREATE_USER, Feature.ASSIGN_ROLE_TO_USER));
+        adminRole.setFeatures(Set.of(Feature.values()));
         roleRepository.save(adminRole);
 
         AUser user = new AUser();
