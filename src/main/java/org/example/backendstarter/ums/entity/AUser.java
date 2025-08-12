@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.backendstarter.common.Auditable;
 
-import java.util.Date;
 import java.util.List;
 
 @Entity(name = "users")
@@ -29,8 +28,6 @@ public class AUser extends Auditable {
     private String lastName;
     private String phone;
     private String cin;
-
-    private Date lastLogin;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;

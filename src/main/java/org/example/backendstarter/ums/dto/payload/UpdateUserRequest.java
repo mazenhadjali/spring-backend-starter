@@ -1,22 +1,16 @@
-package org.example.backendstarter.ums.dto;
+package org.example.backendstarter.ums.dto.payload;
 
 import lombok.Data;
-import org.example.backendstarter.ums.entity.Role;
-
-import java.util.List;
-
 
 @Data
-public class AUserDto {
+public class UpdateUserRequest {
 
-    private Long id;
     private String username;
     private String email;
+    private String password;
 
     private String firstName;
     private String lastName;
     private String phone;
     private String cin;
-
-    private List<Role> roles;
 }

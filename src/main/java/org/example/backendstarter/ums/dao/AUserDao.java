@@ -5,11 +5,17 @@ import org.example.backendstarter.ums.entity.AUser;
 import org.example.backendstarter.ums.repository.AUserRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class AUserDao {
 
     private final AUserRepository repository;
+
+    public List<AUser> findAll() {
+        return repository.findAll();
+    }
 
     public AUser save(AUser user) {
         return repository.save(user);
@@ -31,13 +37,8 @@ public class AUserDao {
         return repository.existsByUsername(username);
     }
 
-    public boolean deleteById(Long id) {
-        try {
-            repository.deleteById(id);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 
 }
