@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.backendstarter.common.Auditable;
@@ -15,7 +16,8 @@ import org.example.backendstarter.common.Feature;
 
 import java.util.Set;
 
-@Entity(name = "roles")
+@Entity()
+@Table(name = "roles")
 @Getter
 @Setter
 public class Role extends Auditable {

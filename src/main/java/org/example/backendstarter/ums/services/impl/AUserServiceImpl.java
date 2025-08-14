@@ -10,8 +10,12 @@ import org.example.backendstarter.ums.entity.AUser;
 import org.example.backendstarter.ums.entity.Role;
 import org.example.backendstarter.ums.mappers.AuserMapper;
 import org.example.backendstarter.ums.services.AUserService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,12 +28,21 @@ public class AUserServiceImpl implements AUserService {
     private final AuserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
+
     @Override
+    @Cacheable(value = "allUsers", sync = true)
     public List<AUserDto> getAllUsers() {
         return userMapper.toAuserDto(userDao.findAll());
     }
 
     @Override
+    @Transactional
+    @Caching(
+            put = {
+                    @CachePut(value = "usersById", key = "#result.id", unless = "#result == null"),
+                    @CachePut(value = "usersByUsername", key = "#result.username", unless = "#result == null")
+            }
+    )
     public AUserDto createUser(CreateUserRequest request) {
         if (userDao.existsByUsername(request.getUsername())) {
             throw new IllegalArgumentException("Username already exists");
@@ -39,6 +52,7 @@ public class AUserServiceImpl implements AUserService {
     }
 
     @Override
+    @Cacheable(value = "usersById", key = "#id", sync = true)
     public AUserDto getUserById(Long id) {
         return userMapper.toAuserDto(userDao.findById(id));
     }

@@ -1,6 +1,7 @@
 package org.example.backendstarter.ums.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backendstarter.ums.dto.RoleDto;
 import org.example.backendstarter.ums.dto.payload.RoleFeatureRequest;
 import org.example.backendstarter.ums.dto.payload.RoleRequest;
 import org.example.backendstarter.ums.entity.Role;
@@ -29,14 +30,14 @@ public class RoleController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('FEAT_LIST_ROLES')")
-    public ResponseEntity<List<Role>> getAllUsers() {
+    public ResponseEntity<List<RoleDto>> getAllUsers() {
         return ResponseEntity.ok(roleService.getAllRoles());
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('FEAT_CREATE_ROLE')")
-    public ResponseEntity<Role> createRole(@RequestBody RoleRequest request, UriComponentsBuilder uriBuilder) {
-        Role created = roleService.createRole(request);
+    public ResponseEntity<RoleDto> createRole(@RequestBody RoleRequest request, UriComponentsBuilder uriBuilder) {
+        RoleDto created = roleService.createRole(request);
         URI location = uriBuilder
                 .path("/api/v1/roles/{id}")
                 .buildAndExpand(created.getId())
@@ -61,7 +62,7 @@ public class RoleController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('FEAT_LIST_ROLES')")
-    public ResponseEntity<Role> getRoleById(@PathVariable Long id) {
+    public ResponseEntity<RoleDto> getRoleById(@PathVariable Long id) {
         return ResponseEntity.ok(roleService.getRoleById(id));
     }
 

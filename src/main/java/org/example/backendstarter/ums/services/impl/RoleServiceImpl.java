@@ -3,8 +3,10 @@ package org.example.backendstarter.ums.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.backendstarter.common.Feature;
 import org.example.backendstarter.ums.dao.RoleDao;
+import org.example.backendstarter.ums.dto.RoleDto;
 import org.example.backendstarter.ums.dto.payload.RoleRequest;
 import org.example.backendstarter.ums.entity.Role;
+import org.example.backendstarter.ums.mappers.RoleMapper;
 import org.example.backendstarter.ums.services.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,17 +19,18 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleDao roleDao;
     private final ModelMapper modelMapper;
+    private final RoleMapper roleMapper;
 
 
     @Override
-    public Role createRole(RoleRequest request) {
+    public RoleDto createRole(RoleRequest request) {
         Role role = modelMapper.map(request, Role.class);
-        return roleDao.save(role);
+        return roleMapper.toDto(roleDao.save(role));
     }
 
     @Override
-    public List<Role> getAllRoles() {
-        return roleDao.findAll();
+    public List<RoleDto> getAllRoles() {
+        return roleMapper.toDtos(roleDao.findAll());
     }
 
     @Override
@@ -41,8 +44,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRoleById(Long id) {
-        return roleDao.findById(id);
+    public RoleDto getRoleById(Long id) {
+        return roleMapper.toDto(roleDao.findById(id));
     }
 
     @Override

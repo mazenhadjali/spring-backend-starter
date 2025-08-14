@@ -6,7 +6,7 @@ import java.util.List;
 
 
 @Data
-public class AUserDto {
+public class AUserDtoWithPass {
 
     private Long id;
     private String username;
@@ -16,6 +16,7 @@ public class AUserDto {
     private String lastName;
     private String phone;
     private String cin;
+    private String password;
 
     private List<RoleDto> roles;
 }
