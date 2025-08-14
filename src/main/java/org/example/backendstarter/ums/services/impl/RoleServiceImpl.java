@@ -9,6 +9,9 @@ import org.example.backendstarter.ums.entity.Role;
 import org.example.backendstarter.ums.mappers.RoleMapper;
 import org.example.backendstarter.ums.services.RoleService;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +26,18 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
+    @Caching(
+            put = {
+                    @CachePut(value = "roleById", key = "#result.id", unless = "#result == null"),
+            }
+    )
     public RoleDto createRole(RoleRequest request) {
         Role role = modelMapper.map(request, Role.class);
         return roleMapper.toDto(roleDao.save(role));
     }
 
     @Override
+    @Cacheable(value = "allRoles", sync = true)
     public List<RoleDto> getAllRoles() {
         return roleMapper.toDtos(roleDao.findAll());
     }
@@ -44,6 +53,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Cacheable(value = "roleById", key = "#id", sync = true)
     public RoleDto getRoleById(Long id) {
         return roleMapper.toDto(roleDao.findById(id));
     }

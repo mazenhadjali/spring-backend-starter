@@ -38,10 +38,12 @@ public class DataInitializer {
         roleRepository.save(adminRole);
 
         AUser user = new AUser();
-        user.setUsername("admin");
-        user.setEmail("admin@example.com");
+        user.setUsername("superadmin");
+        user.setEmail("superadmin@example.com");
         user.setFirstName("admin");
         user.setLastName("admin");
+        user.setCin("12345678");
+        user.setPhone("+21623372100");
         user.setPassword(passwordEncoder.encode("admin"));
         user.setRoles(List.of(adminRole));
 
