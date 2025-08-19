@@ -27,7 +27,7 @@ public class DataInitializer {
     @Transactional
     public void init() {
         // Skip if user already exists
-        if (userRepository.existsByUsername("admin")) {
+        if (userRepository.existsByUsername("superadmin")) {
             return;
         }
 

@@ -31,6 +31,32 @@ services:
       timeout: 10s
       retries: 5
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      # Spring Boot server port
+      SERVER_PORT: "8000"
+
+      JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=60"
+
+    # Optional healthcheck if you have Spring Actuator on /actuator/health
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8000/actuator/health" ]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+
+
 volumes:
   postgres_data:
     driver: local
