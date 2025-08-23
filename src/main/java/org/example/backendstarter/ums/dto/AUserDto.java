@@ -1,6 +1,7 @@
 package org.example.backendstarter.ums.dto;
 
 import lombok.Data;
+import org.example.backendstarter.FileAttachment.dto.FileAttachmentDto;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class AUserDto {
     private String lastName;
     private String phone;
     private String cin;
+
+    private FileAttachmentDto avatar;
 
     private List<RoleDto> roles;
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -19,6 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.backendstarter.FileAttachment.entity.FileAttachment;
 import org.example.backendstarter.common.Auditable;
 
 import java.util.List;
@@ -63,6 +65,9 @@ public class AUser extends Auditable {
 
     @Size(max = 8, message = "CIN must not exceed 20 characters")
     private String cin;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private FileAttachment avatar;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
