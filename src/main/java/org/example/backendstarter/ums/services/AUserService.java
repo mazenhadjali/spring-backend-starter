@@ -14,6 +14,8 @@ public interface AUserService {
 
     AUserDto getUserById(Long id);
 
+    AUserDto getUserByUsername(String username);
+
     AUserDto updateUser(Long id, UpdateUserRequest request);
 
     void deleteUser(Long id);

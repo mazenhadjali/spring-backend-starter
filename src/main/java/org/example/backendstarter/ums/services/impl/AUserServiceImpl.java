@@ -52,9 +52,15 @@ public class AUserServiceImpl implements AUserService {
     }
 
     @Override
-    @Cacheable(value = "usersById", key = "#id", sync = true)
+    @Cacheable(value = "usersById", key = "#id", unless = "#result == null")
     public AUserDto getUserById(Long id) {
         return userMapper.toAuserDto(userDao.findById(id));
+    }
+
+    @Override
+    @Cacheable(value = "usersByUsername", key = "#username", unless = "#result == null")
+    public AUserDto getUserByUsername(String username) {
+        return userMapper.toAuserDto(userDao.findByUsername(username));
     }
 
     @Override
