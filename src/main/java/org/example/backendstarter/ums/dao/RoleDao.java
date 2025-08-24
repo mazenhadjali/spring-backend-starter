@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.backendstarter.ums.entity.Role;
 import org.example.backendstarter.ums.repository.RoleRepository;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ public class RoleDao {
 
     private final RoleRepository roleRepository;
 
+    @Cacheable(value = "roleExistsById", key = "#id", sync = true)
     public boolean existsById(Long id) {
         return roleRepository.existsById(id);
     }
@@ -23,12 +25,12 @@ public class RoleDao {
     @Transactional
     @Caching(
             evict = {
-                    @CacheEvict(value = "roleById", allEntries = true),
+                    @CacheEvict(value = "findAUserByUsernameforAuth", allEntries = true),
+                    @CacheEvict(value = "AUserById", allEntries = true),
+                    @CacheEvict(value = "aUserByUsername", allEntries = true),
+                    @CacheEvict(value = "allaUsers", allEntries = true),
                     @CacheEvict(value = "allRoles", allEntries = true),
-                    @CacheEvict(value = "usersById", allEntries = true),
-                    @CacheEvict(value = "usersByUsername", allEntries = true),
-                    @CacheEvict(value = "allUsers", allEntries = true),
-                    @CacheEvict(value = "loadUserByUsername", allEntries = true),
+                    @CacheEvict(value = "roleById", allEntries = true),
             }
     )
     public Role save(Role role) {
@@ -45,12 +47,12 @@ public class RoleDao {
 
     @Caching(
             evict = {
-                    @CacheEvict(value = "roleById", allEntries = true),
+                    @CacheEvict(value = "findAUserByUsernameforAuth", allEntries = true),
+                    @CacheEvict(value = "AUserById", allEntries = true),
+                    @CacheEvict(value = "aUserByUsername", allEntries = true),
+                    @CacheEvict(value = "allaUsers", allEntries = true),
                     @CacheEvict(value = "allRoles", allEntries = true),
-                    @CacheEvict(value = "usersById", allEntries = true),
-                    @CacheEvict(value = "usersByUsername", allEntries = true),
-                    @CacheEvict(value = "allUsers", allEntries = true),
-                    @CacheEvict(value = "loadUserByUsername", allEntries = true),
+                    @CacheEvict(value = "roleById", allEntries = true),
             }
     )
     public void delete(Long id) {

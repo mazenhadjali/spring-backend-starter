@@ -13,7 +13,7 @@ public class ModelMapperConfig {
         mm.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)  // safer, explicit matches only
                 .setSkipNullEnabled(true)                         // don't overwrite with nulls
-                .setFieldMatchingEnabled(true)                    // allows private field mapping
+//                .setFieldMatchingEnabled(true)                    // allows private field mapping
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
         return mm;
     }

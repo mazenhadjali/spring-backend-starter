@@ -27,11 +27,14 @@ public class AUserDao {
     @Transactional
     @Caching(
             evict = {
-                    @CacheEvict(value = "allUsers", allEntries = true),
-                    @CacheEvict(value = "existsById", allEntries = true),
-                    @CacheEvict(value = "existsByUsername", allEntries = true),
-                    @CacheEvict(value = "usersByUsername", allEntries = true),
-                    @CacheEvict(value = "loadUserByUsername", allEntries = true)
+                    @CacheEvict(value = "allaUsers", allEntries = true),
+                    @CacheEvict(value = "aUserExistsById", allEntries = true),
+                    @CacheEvict(value = "aUserByUsername", allEntries = true),
+                    @CacheEvict(value = "aUserxistsByUsername", allEntries = true),
+                    @CacheEvict(value = "findAUserByUsernameforAuth", allEntries = true),
+                    @CacheEvict(value = "AUserById", allEntries = true),
+
+
             }
     )
     public AUser save(AUser user) {
@@ -46,29 +49,29 @@ public class AUserDao {
         return repository.findByUsername(username).orElse(null);
     }
 
-    @Cacheable(value = "findByUsernameforAuth", key = "#username")
+    @Cacheable(value = "findAUserByUsernameforAuth", key = "#username")
     public AUserDtoWithPass findByUsernameforAuth(String username) {
         return auserMapper.toAUserDtoWithPass(repository.findByUsername(username).orElse(null));
     }
 
-    @Cacheable(value = "existsById", key = "#id")
+    @Cacheable(value = "aUserExistsById", key = "#id")
     public boolean existsById(Long id) {
         return repository.existsById(id);
     }
 
-    @Cacheable(value = "existsByUsername", key = "#username")
+    @Cacheable(value = "aUserxistsByUsername", key = "#username")
     public boolean existsByUsername(String username) {
         return repository.existsByUsername(username);
     }
 
     @Transactional
     @Caching(evict = {
-            @CacheEvict(value = "usersById", key = "#id"),
-            @CacheEvict(value = "usersByUsername", allEntries = true),
-            @CacheEvict(value = "allUsers", allEntries = true),
-            @CacheEvict(value = "existsById", allEntries = true),
-            @CacheEvict(value = "existsByUsername", allEntries = true),
-            @CacheEvict(value = "findByUsernameforAuth", allEntries = true)
+            @CacheEvict(value = "AUserById", key = "#id"),
+            @CacheEvict(value = "aUsersByUsername", allEntries = true),
+            @CacheEvict(value = "allaUsers", allEntries = true),
+            @CacheEvict(value = "aUserExistsById", allEntries = true),
+            @CacheEvict(value = "aUserxistsByUsername", allEntries = true),
+            @CacheEvict(value = "findAUserByUsernameforAuth", allEntries = true)
     })
     public void deleteById(Long id) {
         repository.deleteById(id);

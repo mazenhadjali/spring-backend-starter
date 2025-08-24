@@ -28,9 +28,8 @@ public class AUserServiceImpl implements AUserService {
     private final AuserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
-    @Cacheable(value = "allUsers", sync = true)
+    @Cacheable(value = "allaUsers", sync = true)
     public List<AUserDto> getAllUsers() {
         return userMapper.toAuserDto(userDao.findAll());
     }
@@ -39,8 +38,8 @@ public class AUserServiceImpl implements AUserService {
     @Transactional
     @Caching(
             put = {
-                    @CachePut(value = "usersById", key = "#result.id", unless = "#result == null"),
-                    @CachePut(value = "usersByUsername", key = "#result.username", unless = "#result == null")
+                    @CachePut(value = "AUserById", key = "#result.id", unless = "#result == null"),
+                    @CachePut(value = "aUserByUsername", key = "#result.username", unless = "#result == null")
             }
     )
     public AUserDto createUser(CreateUserRequest request) {
@@ -52,13 +51,13 @@ public class AUserServiceImpl implements AUserService {
     }
 
     @Override
-    @Cacheable(value = "usersById", key = "#id", unless = "#result == null")
+    @Cacheable(value = "aUserExistsById", key = "#id", unless = "#result == null")
     public AUserDto getUserById(Long id) {
         return userMapper.toAuserDto(userDao.findById(id));
     }
 
     @Override
-    @Cacheable(value = "usersByUsername", key = "#username", unless = "#result == null")
+    @Cacheable(value = "aUserByUsername", key = "#username", unless = "#result == null")
     public AUserDto getUserByUsername(String username) {
         return userMapper.toAuserDto(userDao.findByUsername(username));
     }
