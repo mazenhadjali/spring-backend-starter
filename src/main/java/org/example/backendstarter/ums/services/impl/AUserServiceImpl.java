@@ -51,8 +51,11 @@ public class AUserServiceImpl implements AUserService {
     }
 
     @Override
-    @Cacheable(value = "aUserExistsById", key = "#id", unless = "#result == null")
+    @Cacheable(value = "AUserById", key = "#id", unless = "#result == null")
     public AUserDto getUserById(Long id) {
+        if(!userDao.existsById(id)) {
+            throw new IllegalArgumentException("User not found");
+        }
         return userMapper.toAuserDto(userDao.findById(id));
     }
 
