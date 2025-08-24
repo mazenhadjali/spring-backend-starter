@@ -55,11 +55,15 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Cacheable(value = "roleById", key = "#id", sync = true)
     public RoleDto getRoleById(Long id) {
+        if (!roleDao.existsById(id))
+            throw new IllegalArgumentException("Role not found");
         return roleMapper.toDto(roleDao.findById(id));
     }
 
     @Override
     public void deleteRole(Long id) {
+        if (!roleDao.existsById(id))
+            throw new IllegalArgumentException("Role not found");
         roleDao.delete(id);
     }
 
