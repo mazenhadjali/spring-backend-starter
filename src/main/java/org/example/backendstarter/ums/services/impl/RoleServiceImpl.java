@@ -74,7 +74,8 @@ public class RoleServiceImpl implements RoleService {
             throw new IllegalArgumentException("Role not found");
         }
         Feature featureEnum = Feature.valueOf(feature);
-        role.getFeatures().add(featureEnum);
+        if (!role.getFeatures().contains(featureEnum))
+            role.getFeatures().add(featureEnum);
         roleDao.save(role);
     }
 

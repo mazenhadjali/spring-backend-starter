@@ -104,7 +104,7 @@ public class AUserServiceImpl implements AUserService {
         if (role == null) {
             throw new IllegalArgumentException("Role not found");
         }
-        user.getRoles().remove(role);
+        user.getRoles().removeIf(role1 -> role1.getId().equals(role.getId()));
         userDao.save(user);
     }
 }
