@@ -9,6 +9,7 @@ public enum Feature {
     LIST_USERS("list all users", "let the user list all existing users"),
     CREATE_USER("create user", "Let the user create/add a new user"),
     UPDATE_USER("update user", "Allow updating an existing user's details"),
+    FEAT_RESET_USER_PASSWORD("reset user password", "Allow reset user password"),
     DELETE_USER("delete user", "Allow deleting an existing user's details"),
     RESET_USER_PASSWORD("reset user password", "Allow resetting a user's password"),
     ASSIGN_ROLE_TO_USER("assign role to user", "Assign a role to a specific user"),

@@ -5,6 +5,7 @@ import org.example.backendstarter.ums.dao.AUserDao;
 import org.example.backendstarter.ums.dao.RoleDao;
 import org.example.backendstarter.ums.dto.AUserDto;
 import org.example.backendstarter.ums.dto.payload.CreateUserRequest;
+import org.example.backendstarter.ums.dto.payload.ResetAUserPasswordRequest;
 import org.example.backendstarter.ums.dto.payload.UpdateUserRequest;
 import org.example.backendstarter.ums.entity.AUser;
 import org.example.backendstarter.ums.entity.Role;
@@ -53,7 +54,7 @@ public class AUserServiceImpl implements AUserService {
     @Override
     @Cacheable(value = "AUserById", key = "#id", unless = "#result == null")
     public AUserDto getUserById(Long id) {
-        if(!userDao.existsById(id)) {
+        if (!userDao.existsById(id)) {
             throw new IllegalArgumentException("User not found");
         }
         return userMapper.toAuserDto(userDao.findById(id));
@@ -68,8 +69,25 @@ public class AUserServiceImpl implements AUserService {
     @Override
     public AUserDto updateUser(Long id, UpdateUserRequest request) {
         AUser user = userDao.findById(id);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
         userMapper.map(userMapper.toAuser(request), user);
         return userMapper.toAuserDto(userDao.save(user));
+    }
+
+    @Override
+    public void resetPassword(Long id, ResetAUserPasswordRequest request) {
+        AUser user = userDao.findById(id);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            throw new IllegalArgumentException("password and confirmation password do not match!");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userDao.save(user);
     }
 
     @Override

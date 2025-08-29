@@ -3,6 +3,7 @@ package org.example.backendstarter.ums.controllers;
 import lombok.RequiredArgsConstructor;
 import org.example.backendstarter.ums.dto.AUserDto;
 import org.example.backendstarter.ums.dto.payload.CreateUserRequest;
+import org.example.backendstarter.ums.dto.payload.ResetAUserPasswordRequest;
 import org.example.backendstarter.ums.dto.payload.UpdateUserRequest;
 import org.example.backendstarter.ums.services.AUserService;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +69,13 @@ public class AUserController {
     @PutMapping("/{id}")
     public ResponseEntity<AUserDto> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(userService.updateUser(id, request));
+    }
+
+    @PreAuthorize("hasAuthority('FEAT_RESET_USER_PASSWORD')")
+    @PutMapping("/{id}/resetpassword")
+    public ResponseEntity<String> resetPassword(@PathVariable Long id, @RequestBody ResetAUserPasswordRequest request) {
+        userService.resetPassword(id, request);
+        return ResponseEntity.ok("Password reset");
     }
 
     @PreAuthorize("hasAuthority('FEAT_DELETE_USER')")
