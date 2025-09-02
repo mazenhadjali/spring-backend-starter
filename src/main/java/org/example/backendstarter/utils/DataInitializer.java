@@ -2,11 +2,11 @@ package org.example.backendstarter.utils;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.example.backendstarter.common.Feature;
-import org.example.backendstarter.ums.entity.AUser;
-import org.example.backendstarter.ums.entity.Role;
-import org.example.backendstarter.ums.repository.AUserRepository;
-import org.example.backendstarter.ums.repository.RoleRepository;
+import org.example.backendstarter.features.common.Feature;
+import org.example.backendstarter.features.ums.entity.AUser;
+import org.example.backendstarter.features.ums.entity.Role;
+import org.example.backendstarter.features.ums.repository.AUserRepository;
+import org.example.backendstarter.features.ums.repository.RoleRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package org.example.backendstarter.configurations;
 
 import lombok.RequiredArgsConstructor;
-import org.example.backendstarter.auth.services.JpaUserDetailsService;
+import org.example.backendstarter.features.auth.services.JpaUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
